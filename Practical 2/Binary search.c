@@ -1,55 +1,55 @@
 #include <stdio.h>
-int binarySearch(int a[], int size, int element)
+
+// Recursive function for Binary Search
+int binarySearch(int arr[], int low, int high, int target)
 {
-    int low = 0;
-    int high = size - 1;
-    while (low <= high)
-    {
-        int mid = (low + high) / 2;
-        if (a[mid] == element)
-        {
-            return mid;
-        }
-        if (a[mid] < element)
-        {
-            low = mid + 1;
-        }
-        else
-        {
-            high = mid - 1;
-        }
-    }
-    return -1;
+    // Element not found
+    if(low > high)
+        return -1;
+
+    // Find middle index
+    int mid = (low + high) / 2;
+
+    // Check if middle element is target
+    if(arr[mid] == target)
+        return mid;
+
+    // Search in left half
+    if(arr[mid] > target)
+        return binarySearch(arr, low, mid - 1, target);
+
+    // Search in right half
+    return binarySearch(arr, mid + 1, high, target);
 }
+
 int main()
 {
-    int size;
-    printf("Enter size of an array:");
-    scanf("%d", &size);
-    printf("Enter array elements of size %d\n", size);
-    int a[size];
-    for (int i = 0; i < size; i++)
-    {
-        scanf("%d", &a[i]);
-    }
-    int element;
-    printf("enter the element that you want to search:");
-    scanf("%d", &element);
-    int indsearch = binarySearch(a, size, element);
-    if (indsearch != -1)
-    {
-        printf("The Element %d is found at index %d", element, indsearch);
-    }
+    int n, target, result;
+
+    // Take size of array
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+
+    // Take sorted array elements
+    printf("Enter %d sorted elements:\n", n);
+
+    for(int i = 0; i < n; i++)
+        scanf("%d", &arr[i]);
+
+    // Take element to search
+    printf("Enter element to search: ");
+    scanf("%d", &target);
+
+    // Call binary search function
+    result = binarySearch(arr, 0, n - 1, target);
+
+    // Display result
+    if(result != -1)
+        printf("Element found at index: %d\n", result);
     else
-    {
-        printf("something went wrong");
-    }
+        printf("Element not found\n");
 
     return 0;
 }
-
-
-
-
-
-
